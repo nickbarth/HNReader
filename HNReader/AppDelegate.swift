@@ -13,19 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        // var viewController:ViewController = ViewController()
-        // var navigationController:UINavigationController = UINavigationController(initWithRootViewController:XXXX)
-        // self.window!.rootViewController = navigationController;
+        var newsViewController:NewsViewController = NewsViewController()
+        var navigationController:UINavigationController = UINavigationController(rootViewController: newsViewController)
+        self.window!.rootViewController = navigationController
 
         self.window!.backgroundColor = UIColor.greenColor()
         self.window!.makeKeyAndVisible()
+        
+        newsViewController.show()
         
         return true
     }
@@ -51,7 +49,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
 }
-
