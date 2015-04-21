@@ -14,12 +14,12 @@ class NewsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         if let title = data["title"] as? NSString {
-            var titleLabel:UILabel = makeLabel(title, frame: CGRectMake(0, 0, screen().width, 14))
+            var titleLabel:UILabel = makeLabel(title, frame: CGRectMake(5, 2, screen().width, 14))
             self.addSubview(titleLabel)
         }
         
         if let url = data["url"] as? NSString {
-            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(0, 10, screen().width, 20), size: 10, color: UIColor.grayColor())
+            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 10, screen().width, 20), size: 10, color: UIColor.grayColor())
             self.addSubview(urlLabel)
         }
         
@@ -32,7 +32,7 @@ class NewsCell: UITableViewCell {
                     formatter.timeStyle = .ShortStyle
                     let dateTime = formatter.stringFromDate(date)
 
-                    var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(0, 26, screen().width, 10), size: 8, color: UIColor.grayColor())
+                    var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(5, 26, screen().width, 10), size: 8, color: UIColor.grayColor())
                     self.addSubview(scoreLabel)
                 }
             }

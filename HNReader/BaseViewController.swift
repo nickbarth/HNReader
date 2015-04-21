@@ -24,6 +24,10 @@ class BaseViewController : UIViewController {
         return UIScreen.mainScreen().bounds
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func show() {
         view.hidden = false
     }

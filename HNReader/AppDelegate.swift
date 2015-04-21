@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var newsViewController:NewsViewController = NewsViewController()
         var navigationController:UINavigationController = UINavigationController(rootViewController: newsViewController)
+        
         self.window!.rootViewController = navigationController
-
         self.window!.backgroundColor = UIColor.greenColor()
         self.window!.makeKeyAndVisible()
         

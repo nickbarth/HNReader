@@ -17,10 +17,12 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "HNReader"
+        
         news = makeTable() as UITableView
         news.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
         self.view.addSubview(news)
-        
+
         self.fetchStories()
     }
     
@@ -37,7 +39,7 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         task.resume()
     }
     
-    func updateStories(start:Int = 0, end:Int = 3) {
+    func updateStories(start:Int = 0, end:Int = 30) {
         for index in start...end {
             self.fetchStory(index as Int, id: storyIds[index])
         }
