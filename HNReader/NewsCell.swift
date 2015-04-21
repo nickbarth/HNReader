@@ -10,11 +10,18 @@ import Foundation
 import UIKit
 
 class NewsCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String!)  {
+    init(style: UITableViewCellStyle, reuseIdentifier: String!, data:NSDictionary) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        var title:UILabel = makeLabel("some news")
-        self.addSubview(title)
+        if var let title = data["title"] as? NSString {
+            var header:UILabel = makeLabel(title, frame: CGRectMake(0, 0, 200, 14))
+            self.addSubview(header)
+        }
+        
+        if var let url = data["url"] as? NSString {
+            var website:UILabel = makeLabel(url, frame: CGRectMake(0, 14, 200, 20), size: 10, color: UIColor.grayColor())
+            self.addSubview(website)
+        }
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -33,14 +40,14 @@ class NewsCell: UITableViewCell {
         return text
     }
     
-    func makeLabel(title:String) -> UILabel {
+    func makeLabel(title:String, frame:CGRect, size:CGFloat = 12, color:UIColor = UIColor.blackColor()) -> UILabel {
         var label:UILabel = UILabel()
         label.text = title
-        label.frame = CGRectMake(10, 10, 100, 40)
-        label.backgroundColor = UIColor.whiteColor()
-        label.font = UIFont(name: "Helvetica Neue", size: 12)
-        label.textAlignment = NSTextAlignment.Center
-        label.textColor = UIColor.blackColor()
+        label.frame = frame
+        label.backgroundColor = UIColor.clearColor()
+        label.font = UIFont(name: "Helvetica Neue", size: size)
+        label.textAlignment = NSTextAlignment.Left
+        label.textColor = color
         return label
     }
 }

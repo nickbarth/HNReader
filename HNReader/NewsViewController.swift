@@ -10,26 +10,68 @@ import Foundation
 import UIKit
 
 class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-    var newsTable:UITableView! = nil
+    var news:UITableView! = nil
+    var storyIds:[String] = []
+    var stories:[NSDictionary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        newsTable = makeTable() as UITableView
-        newsTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        news = makeTable() as UITableView
+        news.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        self.view.addSubview(news)
         
-        self.view.addSubview(newsTable)
+        self.fetchStories()
+    }
+    
+    func fetchStories() {
+        let url = NSURL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            var data:String = NSString(data: data, encoding: NSUTF8StringEncoding) as String
+            data = data.substringWithRange(Range(start: advance(data.startIndex,1), end: advance(data.endIndex, -1)))
+            self.storyIds = data.componentsSeparatedByString(",")
+            self.updateStories()
+        }
+        
+        task.resume()
+    }
+    
+    func updateStories(start:Int = 0, end:Int = 3) {
+        for index in start...end {
+            self.fetchStory(index as Int, id: storyIds[index])
+        }
+    }
+    
+    func fetchStory(index:Int, id:String) {
+        let url = NSURL(string: "https://hacker-news.firebaseio.com/v0/item/\(id).json")
+        
+        println("fetching story \(index) \(id) now...")
+        
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+            if error == nil {
+                var error:NSError? = nil
+                var data:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error) as NSDictionary
+                self.stories.append(data)
+            
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.news.reloadData()
+                }
+            }
+        }
+        
+        task.resume()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return stories.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("NewsCell") as? UITableViewCell
         
-        if (cell != nil) {
-            cell = NewsCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewsCell")
+        if cell != nil {
+            cell = NewsCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewsCell", data: stories[indexPath.row])
             cell!.backgroundColor = UIColor.clearColor()
             cell!.selectedBackgroundView = UIView()
         }
@@ -43,8 +85,6 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        
-        newsTable.reloadData()
     }
     
     func makeTable() -> UITableView {
@@ -60,5 +100,4 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         table.keyboardDismissMode = .OnDrag
         return table
     }
-    
 }
