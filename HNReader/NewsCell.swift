@@ -31,7 +31,7 @@ class NewsCell: UITableViewCell {
                 url = url.substringToIndex(url.rangeOfString("/")!.startIndex)
             }
             
-            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 11, screen().width, 20), size: 10, color: UIColor.grayColor())
+            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 13, screen().width, 20), size: 10, color: UIColor.grayColor())
             self.addSubview(urlLabel)
         }
         
@@ -44,7 +44,7 @@ class NewsCell: UITableViewCell {
                     formatter.timeStyle = .ShortStyle
                     let dateTime = formatter.stringFromDate(date)
 
-                    var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(5, 26, screen().width, 10), size: 8, color: UIColor.grayColor())
+                    var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(5, 30, screen().width, 10), size: 8, color: UIColor.grayColor())
                     self.addSubview(scoreLabel)
                 }
             }

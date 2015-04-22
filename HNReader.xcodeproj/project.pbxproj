@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0109D6551AE760CD0020F453 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0109D6541AE760CD0020F453 /* WebViewController.swift */; };
 		019127351AE4AA700060923B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019127341AE4AA700060923B /* AppDelegate.swift */; };
 		0191273C1AE4AA700060923B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0191273B1AE4AA700060923B /* Images.xcassets */; };
 		0191273F1AE4AA700060923B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0191273D1AE4AA700060923B /* LaunchScreen.xib */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0109D6541AE760CD0020F453 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		0191272F1AE4AA700060923B /* HNReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HNReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		019127331AE4AA700060923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019127341AE4AA700060923B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				019127541AE4C5AB0060923B /* BaseViewController.swift */,
 				019127571AE4CB950060923B /* NewsViewController.swift */,
+				0109D6541AE760CD0020F453 /* WebViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				019127581AE4CB950060923B /* NewsViewController.swift in Sources */,
 				019127351AE4AA700060923B /* AppDelegate.swift in Sources */,
 				0191275B1AE4D7280060923B /* NewsCell.swift in Sources */,
+				0109D6551AE760CD0020F453 /* WebViewController.swift in Sources */,
 				019127551AE4C5AB0060923B /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +423,7 @@
 				019127501AE4AA700060923B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		019127511AE4AA700060923B /* Build configuration list for PBXNativeTarget "HNReaderTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +432,7 @@
 				019127531AE4AA700060923B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
