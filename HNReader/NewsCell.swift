@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 class NewsCell: UITableViewCell {
+    let data:NSDictionary
+    
     init(style: UITableViewCellStyle, reuseIdentifier: String!, data:NSDictionary) {
+        self.data = data
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         if let title = data["title"] as? NSString {

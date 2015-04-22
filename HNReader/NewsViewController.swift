@@ -15,7 +15,6 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var storyIds:[String] = []
     var stories:[NSDictionary] = []
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,16 +61,17 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func fetchStory(index:Int, id:String) {
         let url = NSURL(string: "https://hacker-news.firebaseio.com/v0/item/\(id).json")
         
-        println("fetching story \(index) \(id) now...")
-        
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
             if error == nil {
                 var error:NSError? = nil
                 var data:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error) as NSDictionary
-                self.stories.append(data)
-            
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.news.reloadData()
+                
+                if data["type"] as? String == "story" {
+                    self.stories.append(data)
+                
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.news.reloadData()
+                    }
                 }
             }
         }
@@ -96,6 +96,23 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
+        cell.contentView.backgroundColor = UIColor.lightGrayColor()
+        
+        if let url = stories[indexPath.row]["url"] as? String {
+            var request:NSURL = NSURL(string: url)!
+            
+            var web:UIViewController = UIViewController()
+            var webView:UIWebView = UIWebView()
+            web.view.addSubview(webView)
+            
+            web.view.frame = bounds()
+            webView.frame = bounds()
+            
+            webView.loadRequest(NSURLRequest(URL: request))
+            
+            navigationController?.pushViewController(web, animated: true)
+        }
         
     }
     

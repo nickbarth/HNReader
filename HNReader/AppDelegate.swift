@@ -22,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.greenColor()
         self.window!.makeKeyAndVisible()
         
-        newsViewController.show()
-        
         return true
     }
 
