@@ -19,7 +19,7 @@ class NewsCell: UITableViewCell {
         }
         
         if let url = data["url"] as? NSString {
-            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 10, screen().width, 20), size: 10, color: UIColor.grayColor())
+            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 11, screen().width, 20), size: 10, color: UIColor.grayColor())
             self.addSubview(urlLabel)
         }
         

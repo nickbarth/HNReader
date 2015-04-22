@@ -11,8 +11,10 @@ import UIKit
 
 class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     var news:UITableView! = nil
+    var refreshControl:UIRefreshControl! = nil
     var storyIds:[String] = []
     var stories:[NSDictionary] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +25,19 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         news.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
         self.view.addSubview(news)
 
-        self.fetchStories()
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        news.addSubview(refreshControl)
+        
+        refresh()
+    }
+    
+    func refresh() {
+        storyIds = []
+        stories = []
+        news.reloadData()
+        fetchStories()
+        refreshControl.endRefreshing()
     }
     
     func fetchStories() {
