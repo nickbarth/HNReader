@@ -18,7 +18,15 @@ class NewsCell: UITableViewCell {
             self.addSubview(titleLabel)
         }
         
-        if let url = data["url"] as? NSString {
+        if var url = data["url"] as? String {
+            url = url.stringByReplacingOccurrencesOfString("https://", withString: "")
+            url = url.stringByReplacingOccurrencesOfString("http://", withString: "")
+            url = url.stringByReplacingOccurrencesOfString("www.", withString: "")
+            
+            if (url.rangeOfString("/") != nil) {
+                url = url.substringToIndex(url.rangeOfString("/")!.startIndex)
+            }
+            
             var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 11, screen().width, 20), size: 10, color: UIColor.grayColor())
             self.addSubview(urlLabel)
         }
