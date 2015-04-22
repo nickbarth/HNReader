@@ -91,7 +91,7 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         var cell = tableView.dequeueReusableCellWithIdentifier("NewsCell") as? UITableViewCell
         
         if cell != nil {
-            cell = NewsCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewsCell", data: stories[indexPath.row])
+            cell = NewsCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewsCell", data: stories[indexPath.row], parent: self)
             cell!.backgroundColor = UIColor.clearColor()
             cell!.selectedBackgroundView = UIView()
         }
@@ -110,7 +110,12 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             webViewController.goToURL(NSURL(string: url)!)
             navigationController?.pushViewController(webViewController, animated: true)
         }
-        
+    }
+    
+    func goToComments(sender: UIButton!) {
+        webViewController.goToURL(NSURL(string: "about:blank")!)
+        webViewController.goToURL(NSURL(string: "https://news.ycombinator.com/item?id=\(sender.tag)")!)
+        navigationController?.pushViewController(webViewController, animated: true)
     }
     
     func makeTable() -> UITableView {
