@@ -10,15 +10,17 @@ import Foundation
 import UIKit
 
 class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+    var webViewController:WebViewController! = nil
     var news:UITableView! = nil
     var refreshControl:UIRefreshControl! = nil
     var storyIds:[String] = []
     var stories:[NSDictionary] = []
+    var selected:NSIndexPath! = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "HNReader"
+        webViewController = WebViewController()
         
         news = makeTable() as UITableView
         news.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
@@ -26,14 +28,16 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        refreshControl.attributedTitle = NSAttributedString(string: "HNReader")
+
         news.addSubview(refreshControl)
         
         refresh()
     }
     
     func refresh() {
-        storyIds = []
-        stories = []
+        (storyIds, stories) = ([], [])
         news.reloadData()
         fetchStories()
         refreshControl.endRefreshing()
@@ -96,28 +100,17 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        webViewController.goToURL(NSURL(string: "about:blank")!)
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-        cell.contentView.backgroundColor = UIColor.lightGrayColor()
+        cell.contentView.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        
+        selected = indexPath
         
         if let url = stories[indexPath.row]["url"] as? String {
-            var request:NSURL = NSURL(string: url)!
-            
-            var web:UIViewController = UIViewController()
-            var webView:UIWebView = UIWebView()
-            web.view.addSubview(webView)
-            
-            web.view.frame = bounds()
-            webView.frame = bounds()
-            
-            webView.loadRequest(NSURLRequest(URL: request))
-            
-            navigationController?.pushViewController(web, animated: true)
+            webViewController.goToURL(NSURL(string: url)!)
+            navigationController?.pushViewController(webViewController, animated: true)
         }
         
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
     }
     
     func makeTable() -> UITableView {
@@ -132,5 +125,14 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         table.showsVerticalScrollIndicator = false
         table.keyboardDismissMode = .OnDrag
         return table
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+        
+        if selected != nil {
+            news.deselectRowAtIndexPath(selected, animated: false)
+        }
     }
 }
