@@ -19,7 +19,7 @@ class NewsCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        if let title = data["title"] as? NSString {
+        if let title = data["title"] as? String {
             var titleLabel:UILabel = makeLabel(title, frame: CGRectMake(5, 2, screen().width - 50, 14))
             self.addSubview(titleLabel)
         }
@@ -50,8 +50,8 @@ class NewsCell: UITableViewCell {
                         var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(5, 30, screen().width - 50, 10), size: 8, color: UIColor.grayColor())
                         self.addSubview(scoreLabel)
                         
-                        var button:UIButton = makeButton("\(comments)", source: parent, action: "goToComments:", frame: CGRectMake(screen().width - 30, 10, 20, 20))
-                        button.layer.cornerRadius = 10
+                        var button:UIButton = makeButton("\(comments)", source: parent, action: "goToComments:", frame: CGRectMake(screen().width - 35, 8, 30, 30))
+                        button.layer.cornerRadius = 15
                         button.layer.borderWidth = 0
                         button.layer.borderColor = UIColor.blueColor().CGColor
                         button.tag = storyId

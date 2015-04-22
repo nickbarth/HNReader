@@ -17,6 +17,7 @@ class WebViewController: BaseViewController {
         
         webView = UIWebView()
         webView.frame = bounds()
+        webView.scalesPageToFit = true
         
         view.addSubview(webView)
     }

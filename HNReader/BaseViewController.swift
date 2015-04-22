@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 class BaseViewController : UIViewController {
-    override init() {
+    init() {
         super.init(nibName: nil, bundle: nil)
         view.frame = UIScreen.mainScreen().bounds
     }

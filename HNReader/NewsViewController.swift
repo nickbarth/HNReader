@@ -47,7 +47,7 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let url = NSURL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")
         
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-            var data:String = NSString(data: data, encoding: NSUTF8StringEncoding) as String
+            var data:String = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
             data = data.substringWithRange(Range(start: advance(data.startIndex,1), end: advance(data.endIndex, -1)))
             self.storyIds = data.componentsSeparatedByString(",")
             self.updateStories()
@@ -68,7 +68,7 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
             if error == nil {
                 var error:NSError? = nil
-                var data:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error) as NSDictionary
+                var data:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &error) as! NSDictionary
                 
                 if data["type"] as? String == "story" {
                     self.stories.append(data)
