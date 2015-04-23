@@ -100,7 +100,6 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        webViewController.goToURL(NSURL(string: "about:blank")!)
         var cell:UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         cell.contentView.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
@@ -113,7 +112,6 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func goToComments(sender: UIButton!) {
-        webViewController.goToURL(NSURL(string: "about:blank")!)
         webViewController.goToURL(NSURL(string: "https://news.ycombinator.com/item?id=\(sender.tag)")!)
         navigationController?.pushViewController(webViewController, animated: true)
     }
@@ -139,5 +137,9 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if selected != nil {
             news.deselectRowAtIndexPath(selected, animated: false)
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        webViewController.goToURL(NSURL(string: "about:blank")!)
     }
 }
