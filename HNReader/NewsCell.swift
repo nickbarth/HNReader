@@ -20,7 +20,7 @@ class NewsCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         if let title = data["title"] as? String {
-            var titleLabel:UILabel = makeLabel(title, frame: CGRectMake(5, 2, screen().width - 50, 14))
+            var titleLabel:UILabel = makeLabel(title, frame: CGRectMake(5, 2, screen().width - 50, 24), size: 12, color: UIColor.lightGrayColor())
             self.addSubview(titleLabel)
         }
         
@@ -33,7 +33,7 @@ class NewsCell: UITableViewCell {
                 url = url.substringToIndex(url.rangeOfString("/")!.startIndex)
             }
             
-            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 13, screen().width - 50, 20), size: 10, color: UIColor.grayColor())
+            var urlLabel:UILabel = makeLabel(url, frame: CGRectMake(5, 15, screen().width - 50, 20), size: 10, color: UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1))
             self.addSubview(urlLabel)
         }
         
@@ -50,11 +50,12 @@ class NewsCell: UITableViewCell {
                         var scoreLabel:UILabel = makeLabel("\(score) points and \(comments) comments | \(dateTime)", frame: CGRectMake(5, 30, screen().width - 50, 10), size: 8, color: UIColor.grayColor())
                         self.addSubview(scoreLabel)
                         
-                        var button:UIButton = makeButton("\(comments)", source: parent, action: "goToComments:", frame: CGRectMake(screen().width - 35, 8, 30, 30))
-                        button.layer.cornerRadius = 15
-                        button.layer.borderWidth = 0
-                        button.layer.borderColor = UIColor.blueColor().CGColor
+                        var button:UIButton = makeButton("\(comments)", source: parent, action: "goToComments:", frame: CGRectMake(screen().width - 35, 14, 20, 20), fcolor: UIColor.grayColor())
+                        button.layer.cornerRadius = 10
+                        button.layer.borderWidth = 1
+                        button.layer.borderColor = UIColor.darkGrayColor().CGColor
                         button.tag = storyId
+                        button.backgroundColor = UIColor.clearColor()
                         self.addSubview(button)
                     }
                 }
@@ -72,7 +73,7 @@ class NewsCell: UITableViewCell {
         }
     }
     
-    func makeButton(title:String, source:AnyObject, action:Selector, frame:CGRect, fsize:CGFloat = 12, fcolor: UIColor = UIColor.whiteColor(), bcolor: UIColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1), halign: UIControlContentHorizontalAlignment = .Center) -> UIButton {
+    func makeButton(title:String, source:AnyObject, action:Selector, frame:CGRect, fsize:CGFloat = 10, fcolor: UIColor = UIColor.whiteColor(), bcolor: UIColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1), halign: UIControlContentHorizontalAlignment = .Center) -> UIButton {
  
         var button:UIButton = UIButton()
         button.backgroundColor = bcolor

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import QuartzCore
 
 class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     var webViewController:WebViewController! = nil
@@ -21,6 +22,18 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         webViewController = WebViewController()
+        
+        let gradient:CAGradientLayer = CAGradientLayer()
+        gradient.colors = [UIColor.blackColor().CGColor, UIColor.whiteColor().CGColor]
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: bounds().width, height: bounds().height * 3)
+        view.layer.insertSublayer(gradient, atIndex: 0)
+        
+        var audioBlur = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        audioBlur.frame = self.view.bounds
+        view.addSubview(audioBlur)
         
         news = makeTable() as UITableView
         news.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
@@ -121,18 +134,23 @@ class NewsViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         table.delegate = self
         table.dataSource = self
         table.backgroundColor = UIColor.whiteColor()
+        
         table.backgroundView = nil
         table.separatorStyle = UITableViewCellSeparatorStyle.None
         table.bounces = true
         table.showsHorizontalScrollIndicator = false
         table.showsVerticalScrollIndicator = false
         table.keyboardDismissMode = .OnDrag
+        
+        table.backgroundColor = UIColor.clearColor()
+        
         return table
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        self.news.estimatedRowHeight = 200
         
         if selected != nil {
             news.deselectRowAtIndexPath(selected, animated: false)
